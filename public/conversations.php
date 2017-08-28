@@ -48,9 +48,11 @@
 
       <label for='subject'>Subject:</label>
       <input id='subject' name='subject' type='text' />
+      <br>
 
       <label for='body'>Message:</label>
       <textarea id='body' name='body' type='textarea'></textarea>
+      <br>
 
       <button type="submit">Send Message</button>
     </form>
