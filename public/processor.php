@@ -1,6 +1,9 @@
 <?php
-$file_path = $_GET['file_path'];
-$file_data = file_get_contents($file_path);
+$private_dir = getcwd();
+$private_dir = substr($private_dir, 0, -6);
+// 
+$file_path = $private_dir . $_GET['file_path'];
+
 
 $filename = basename($file_path);
 $file_extension = strtolower(substr(strrchr($filename,"."),1));

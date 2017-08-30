@@ -24,6 +24,7 @@
   }
 
   $query = get_latest_messages($inputs);
+
   $latest_messages = $dbh->query($query);
   // select loggedin users detail
   $res = $dbh->query("SELECT * FROM profiles WHERE userId=".$_SESSION['user']);
@@ -116,7 +117,9 @@
     } else {
       if (move_uploaded_file($_FILES["image_upload"]["tmp_name"], $target_file)) {
           echo "The file ". basename( $_FILES["image_upload"]["name"]). " has been uploaded.";
-          return $target_file;
+           
+          return substr($target_file, 3);;
+// ;
       } else {
           echo "Sorry, there was an error uploading your file.";
       }
