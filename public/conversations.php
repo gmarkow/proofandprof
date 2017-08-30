@@ -28,6 +28,7 @@
       <p>Your conversation with <?php echo $dbh->convert_user($inputs['get']['from_user']); ?></p>
         <?php
           foreach ($conversations as $conversation) {
+
             if($conversation['userId'] == $inputs['session']['user']){
               echo "<p>From: you</p>";
             } else {
@@ -36,6 +37,9 @@
             echo "<p>Subject: " . $conversation['subject'] . "</p>";
             echo "<p>Time: " . date('Y-m-d H:i', $conversation['time_sent']) . "</p>";
             echo "<p>" . $conversation['body'] . "</p>";
+            if($conversation['attachment'] != ''){
+              echo "<img src='processor.php?file_path=".$conversation['attachment']."'/>"; 
+            }
             echo "<hr>";
           }
         ?>
@@ -68,7 +72,7 @@
 
 <?php
   function get_conversations($inputs){ 
-      $query = "SELECT subject, body, time_sent, userName, `read`, userId FROM messages LEFT JOIN `users` ON messages.from = users.userId WHERE (`to`=" . $inputs['session']['user'] . " AND `from`=" . $inputs['get']['from_user'] . ") OR (`to`=" . $inputs['get']['from_user'] . " AND `from`=" . $inputs['session']['user'] . ") ORDER BY time_sent ASC";
+      $query = "SELECT subject, body, time_sent, userName, `read`, userId, attachment FROM messages LEFT JOIN `users` ON messages.from = users.userId WHERE (`to`=" . $inputs['session']['user'] . " AND `from`=" . $inputs['get']['from_user'] . ") OR (`to`=" . $inputs['get']['from_user'] . " AND `from`=" . $inputs['session']['user'] . ") ORDER BY time_sent ASC";
       return $query;
   }
 

@@ -13,8 +13,10 @@
   $inputs = $dbh->validate_inputs($_SESSION, $_POST);
   if(isset($_POST['send_message'])){
     $inputs['to_user'] = $dbh->search_for_user($inputs['post']['to']);
-    if( isset($_FILES['image_upload']) ){
-      do_image_upload($inputs);
+    $inputs['attachment'] = '';
+    if( $_FILES['image_upload']['size'] != 0 ){
+      $attachment_path = do_image_upload($inputs);
+      $inputs['attachment'] = $attachment_path;
     }
     $query = create_message_query($inputs);
     $dbh->upsert($query);
@@ -71,7 +73,7 @@
 
 <?php 
   function create_message_query($inputs){
-    $query = "INSERT INTO messages (`to`, `from`, `subject`, `body`, `read`, `time_sent`) VALUES ('" . $inputs['to_user']['userId'] . "', '" . $inputs['session']['user'] . "', '" . $inputs['post']['subject'] . "', '" . $inputs['post']['body'] . "', 0, " . time() . ")";
+    $query = "INSERT INTO messages (`to`, `from`, `subject`, `body`, `read`, `attachment`, `time_sent`) VALUES ('" . $inputs['to_user']['userId'] . "', '" . $inputs['session']['user'] . "', '" . $inputs['post']['subject'] . "', '" . $inputs['post']['body'] . "', 0, '" . $inputs['attachment'] ."'," . time() . ")";
     return $query;
   }
 
@@ -114,10 +116,12 @@
     } else {
       if (move_uploaded_file($_FILES["image_upload"]["tmp_name"], $target_file)) {
           echo "The file ". basename( $_FILES["image_upload"]["name"]). " has been uploaded.";
+          return $target_file;
       } else {
           echo "Sorry, there was an error uploading your file.";
       }
     }
+
   
   }
 
