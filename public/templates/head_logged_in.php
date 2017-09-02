@@ -33,7 +33,7 @@
             
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-user"></span>&nbsp;Hi&nbsp;<?php echo $userRow['userEmail']; ?>&nbsp;<span class="caret"></span></a>
+        <span class="glyphicon glyphicon-user"></span>&nbsp;Hi&nbsp;<?php echo $userRow['userName']; ?>&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="profile_edit.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Edit Profile</a></li>
                 <li><a href="messages.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Messages</a></li>

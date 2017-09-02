@@ -64,7 +64,7 @@ class dbconnection
     foreach ($dirty_post as $key => $value) {
     	switch($key){
     		case 'location_zip':
-      		$post[$key] = filter_var($value, FILTER_VALIDATE_INT);
+      		$post[$key] = filter_var($value, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
       		break;
       	default:
       		$post[$key] = filter_var($value, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH); 

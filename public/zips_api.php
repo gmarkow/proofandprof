@@ -27,7 +27,7 @@ class zipcodes
       $zips = $zips_1->zip_codes;
     }
 
-    $stopper = 0;
+    return $zips;
   }
 
   public function store_it($zips_json){
