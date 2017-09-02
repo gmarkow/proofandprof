@@ -5,7 +5,7 @@
     require_once 'zips_api.php';
   $dbh = new dbconnection;
   $zips = new zipcodes;
-  $zips->get_zips('34689');
+  $zips->get_zips('33781');
 	
 	// if session is not set this will redirect to login page
 	if( !isset($_SESSION['user']) ) {
@@ -19,7 +19,7 @@
 ?>
    
     	<div class="page-header">
-    	<h3>Coding Cage - Programming Blog</h3>
+    	<h3>Near You</h3>
     	</div>
         
         <div class="row">
