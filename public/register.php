@@ -79,6 +79,8 @@
       $recordId = $recordId[0]['userId'];
       $query = "INSERT INTO profiles(userId, userName, userEmail) VALUES('$recordId', '$name', '$email')";
 			$dbh->upsert($query);
+      $query = "INSERT INTO profiles_meta(userId, meta_type, value, timestamp) VALUES('$recordId', '1', '', " . time() . ")";
+      $dbh->upsert($query);
 			if ($res == '1') {
 				$errTyp = "success";
 				$errMSG = "Successfully registered, you may login now";

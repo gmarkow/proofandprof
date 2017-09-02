@@ -118,8 +118,8 @@
       if (move_uploaded_file($_FILES["image_upload"]["tmp_name"], $target_file)) {
           echo "The file ". basename( $_FILES["image_upload"]["name"]). " has been uploaded.";
            
-          return substr($target_file, 3);;
-// ;
+          return substr($target_file, 3);
+
       } else {
           echo "Sorry, there was an error uploading your file.";
       }

@@ -32,6 +32,7 @@
                 echo "<div class='col-lg-4'>";
                     echo "<div class='profile-summary-container'>";
                         echo "<h4>" . $nearby_profile['userName'] . "</h4>";
+                        echo "<img style='height:50px; width:50px;' src='processor.php?file_path=".$nearby_profile['value']."'/><br>"; 
                         echo "<a href='profile_view.php?userId=" . $nearby_profile['userId'] . "'>View " . $nearby_profile['userName'] . "</a>";
                     echo "</div>";
                 echo "</div>";
@@ -58,13 +59,15 @@
 <?php 
 
     function get_nearby_users($nearby_zips){
-        $query = "SELECT `userId`, `userName`, `user_introduction` FROM `profiles` WHERE `location_zip` IN ("; 
+        //$query = "SELECT `userId`, `userName`, `user_introduction` FROM `profiles` WHERE `location_zip` IN ("; 
+        //SELECT profiles.userId, `userName`, `user_introduction`, profiles_meta.value FROM `profiles` LEFT JOIN `profiles_meta` ON profiles_meta.userID = profiles.userId WHERE `location_zip` IN (";
+        $query = "SELECT profiles.userId, `userName`, `user_introduction`, profiles_meta.value FROM `profiles` LEFT JOIN `profiles_meta` ON profiles_meta.userID = profiles.userId WHERE `location_zip` IN (";
         $zip_string = '';
         foreach ($nearby_zips as $nearby_zip) {
             $zip_string .= "'" . $nearby_zip->zip_code . "',";
         }
         $zip_string = rtrim($zip_string, ',');
-        $query .= $zip_string . ")";
+        $query .= $zip_string . ") AND meta_type='1'";
         return $query;
     }
 
