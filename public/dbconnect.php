@@ -18,7 +18,8 @@ class dbconnection
 	}
 
 	public function query($sql){
-		$result = $this->dbh->query($sql)->fetchAll();
+		$result = $this->dbh->query($sql);
+    $result = $result->fetchAll();
 		return $result;
 	}
 

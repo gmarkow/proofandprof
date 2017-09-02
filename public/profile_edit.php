@@ -33,6 +33,8 @@
             $inputs['meta_type'] = 1;
             $query2 = "UPDATE `profiles_meta` SET `meta_type` = '2' WHERE `userId`='" . $_SESSION['user'] . "' AND `meta_type`='1'";
             $dbh->upsert($query2);
+            $query2 = "DELETE FROM  `profiles_meta` WHERE `userId`='" . $_SESSION['user'] . "' AND `value`=''";
+            $dbh->upsert($query2);
           } else {
             $inputs['meta_type'] = 2;
           }

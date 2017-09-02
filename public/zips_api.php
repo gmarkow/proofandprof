@@ -32,6 +32,9 @@ class zipcodes
 
   public function store_it($zips_json){
     $datum = json_decode($zips_json);
+    if(isset($datum->error_code)){
+      return "404";
+    }
     foreach ($datum->zip_codes as $data) {
       if($data->zip_code == $this->zip){
         $township = $data->city;
