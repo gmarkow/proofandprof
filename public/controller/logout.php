@@ -16,7 +16,7 @@ class logout extends dbconnection
       unset($_SESSION['user']);
       session_unset();
       session_destroy();
-      header("Location: ?route=homepage");
+      header("Location: index.php");
       exit;
     }
   }

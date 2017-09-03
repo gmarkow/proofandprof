@@ -81,7 +81,8 @@ class SecureSessionHandler extends SessionHandler {
 
     public function write($id, $data)
     {
-        return parent::write($id, openssl_encrypt($data, "aes-256-cbc", $this->key));
+        // return parent::write($id, openssl_encrypt($data, "aes-256-cbc", $this->key));
+        return parent::write($id, openssl_encrypt($data, "aes-256-cbc", $this->key, false, 'Tx8GueGbIR28DFDe'));
     }
 
     public function isExpired($ttl = 30)
