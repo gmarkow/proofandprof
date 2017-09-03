@@ -5,12 +5,8 @@ class dbconnection
 
 	public $dbh;
 	function __construct(){
-    $user     = 'gpmdate';
-    $pass     = 'tshirt11';
-    $dbname   = 'gpmdate';
-    $host     = 'localhost';
 		try {
-		    $this->dbh = new PDO('mysql:host='.$host.';dbname='.$dbname, $user, $pass);
+		    $this->dbh = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
 		} catch (PDOException $e) {
 		    print "Error!: " . $e->getMessage() . "<br/>";
 		    die();

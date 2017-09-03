@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="home.php">Home</a>
+          <a class="navbar-brand" href="?route=userhome">Home</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <!--  
@@ -35,9 +35,9 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
         <span class="glyphicon glyphicon-user"></span>&nbsp;Hi&nbsp;<?php echo $userRow['userName']; ?>&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="profile_edit.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Edit Profile</a></li>
-                <li><a href="messages.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Messages</a></li>
-                <li><a href="logout.php?logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
+                <li><a href="?route=profile_edit"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Edit Profile</a></li>
+                <li><a href="?route=messages"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Messages</a></li>
+                <li><a href="?route=logout&logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
               </ul>
             </li>
           </ul>
