@@ -8,8 +8,6 @@ class my_connections
     if(isset($_GET['update_connection'])){
       $this->update_connection($this->inputs['get']['update_connection']);
     }
-    // $i_messaged = $this->i_messaged();
-    // $messaged_me = $this->messaged_me();
     $this->merge_messages( $this->i_messaged(), $this->messaged_me() );
     $this->create_connections();
 
@@ -41,14 +39,42 @@ class my_connections
   }
 
   public function create_connections(){
+    $new_connections_query = 'INSERT INTO `connections` (`userId`, `connection_id`, `messaged_me`, `messaged_them`) VALUES ';
     $query = 'SELECT * FROM `connections` WHERE `userId`=' .$this->inputs['session']['user'] . ' AND connection_id IN (' ;
+    $new_connections_values = '';
+    $connection_id_query = 'SELECT `connection_id` FROM `connections` WHERE `userId`=' .$this->inputs['session']['user'];
+    $connection_ids = $this->dbh->query($connection_id_query);
+    foreach ($connection_ids as $connection_id) {
+      $connections_array[$connection_id['connection_id']] = '1' ; 
+    }
+
     foreach($this->connections as $key => $connection){
       $query .= $key . ', ';
+      if(!isset($connections_array[$key])){
+        $add_connection[$key]['from_me']   = (isset($connection['from_me']) ? '1' : '0');
+        $add_connection[$key]['from_them'] = (isset($connection['from_them']) ? '1' : '0');
+        $new_connections_values .= '('.$this->inputs['session']['user'].', ' . $key .   ', ' . $add_connection[$key]['from_them'] . ', ' . $add_connection[$key]['from_me'] . '),';
+      }
     }
+
+    $new_connections_values = rtrim($new_connections_values, ', ');
     $query = rtrim($query, ', ');
     $query = $query .= ')';
-    $result = $this->dbh->query($query);
-    return $query;
+    
+    if($new_connections_values != ''){
+      $new_connections_query .= $new_connections_values; 
+      $this->dbh->upsert($new_connections_query);
+      $stopper = 0;
+    }
+    
+
+    $connection_data = $this->dbh->query($query);
+    foreach ($connection_data as $connection_d) {
+      $this->connections[$connection_d['connection_id']]['met_in_person'] = $connection_d['met_in_person'];
+      $this->connections[$connection_d['connection_id']]['vouch_online'] = $connection_d['vouch_online'];
+      $this->connections[$connection_d['connection_id']]['vouch_afk'] = $connection_d['vouch_afk'];
+    }
+    return 0;
 
   }
 
@@ -57,7 +83,7 @@ class my_connections
     $vouch_online = (isset($this->inputs['post']['vouch_online']) ? '1' : '0' );  
     $vouch_afk = (isset($this->inputs['post']['vouch_afk']) ? '1' : '0' );  
 
-    $query = "INSERT INTO table (`met_in_person`, `vouch_online`, `vouch_afk`) VALUES ('" . $met_in_person . "', '" . $vouch_online . "', '" . $vouch_afk . "') WHERE `userId`=" .$this->inputs['session']['user'] . "AND `connection_id`=" . $connection_id . "ON DUPLICATE KEY UPDATE `met_in_person`='" . $met_in_person . "', `vouch_online`='" . $vouch_online . "', `vouch_afk`='" . $vouch_afk . "'";
-    $stopper = 0;
+    $query = "UPDATE connections SET `met_in_person`='" . $met_in_person . "', `vouch_online`='" . $vouch_online . "', `vouch_afk`='" . $vouch_afk . "' WHERE `userId`=" .$this->inputs['session']['user'] . " AND `connection_id`=" . $connection_id;// . " ON DUPLICATE KEY UPDATE `met_in_person`='" . $met_in_person . "', `vouch_online`='" . $vouch_online . "', `vouch_afk`='" . $vouch_afk . "'";
+    $this->dbh->upsert($query);
   }
 }
