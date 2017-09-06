@@ -1,8 +1,8 @@
 <?php
-class messages extends dbconnection
+class messages
 {
   public function __construct(){
-    $dbh = new dbconnection;
+    $this->dbh = new dbconnection;
     
     // if session is not set this will redirect to login page
     if( !isset($_SESSION['user']) ) {
@@ -10,25 +10,22 @@ class messages extends dbconnection
       exit;
     }
 
-    $inputs = $dbh->validate_inputs($_SESSION, $_POST);
+    $inputs = $this->dbh->validate_inputs($_SESSION, $_POST);
     if(isset($_POST['send_message'])){
-      $inputs['to_user'] = $dbh->search_for_user($inputs['post']['to']);
+      $inputs['to_user'] = $this->dbh->search_for_user($inputs['post']['to']);
       $inputs['attachment'] = '';
       if( $_FILES['image_upload']['size'] != 0 ){
         $attachment_path = $this->do_image_upload($inputs);
         $inputs['attachment'] = $attachment_path;
       }
       $query = $this->create_message_query($inputs);
-      $dbh->upsert($query);
+      $this->dbh->upsert($query);
       
     }
 
     $query = $this->get_latest_messages($inputs);
 
-    $latest_messages = $dbh->query($query);
-    // select loggedin users detail
-    $res = $dbh->query("SELECT * FROM profiles WHERE userId=".$_SESSION['user']);
-    $userRow=$res[0];
+    $latest_messages = $this->dbh->query($query);
     require_once(VIEW_DIR . 'head_logged_in.php');
     require_once(VIEW_DIR . 'messages.php');
     require_once(VIEW_DIR . 'footer.php');
@@ -41,7 +38,7 @@ class messages extends dbconnection
   }
 
   public function get_latest_messages($inputs){
-    $query = "SELECT userName, `from`, subject,  body FROM messages  LEFT JOIN `users` ON messages.from = users.userId WHERE  `time_sent` IN (SELECT MAX(time_sent) FROM messages GROUP BY `from`) AND `to`=" .$inputs['session']['user'];
+    $query = "SELECT userName, `from`, subject,  body FROM messages  LEFT JOIN `users` ON messages.from = users.userId WHERE `time_sent` IN (SELECT MAX(time_sent) FROM messages GROUP BY `from`) AND `to`=" .$inputs['session']['user'];
     //$query = "SELECT * FROM messages WHERE `to`=" . $inputs['session']['user'] . " ";
     return $query;
   }

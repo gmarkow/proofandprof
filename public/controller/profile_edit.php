@@ -1,8 +1,8 @@
 <?php 
-class profile_edit extends dbconnection{
+class profile_edit{
   function __construct(){
 
-  $dbh = new dbconnection;
+  $this->dbh = new dbconnection;
   
   // if session is not set this will redirect to login page
   if( !isset($_SESSION['user']) ) {
@@ -11,7 +11,7 @@ class profile_edit extends dbconnection{
   }
 
   if( isset($_POST['profile_update']) || isset($_POST['profile_add_image']) ){
-    $inputs = $dbh->validate_inputs($_SESSION, $_POST);
+    $inputs = $this->dbh->validate_inputs($_SESSION, $_POST);
     if(!$_SESSION['user']){
       echo "Error";
     }
@@ -19,7 +19,7 @@ class profile_edit extends dbconnection{
     if( isset($_POST['profile_update'])){
       $query = $this->create_update_query($inputs);
       if( $query ){ 
-        $res = $dbh->upsert($query);
+        $res = $this->dbh->upsert($query);
       } else {
         //$errors;
       }
@@ -32,9 +32,9 @@ class profile_edit extends dbconnection{
           if($inputs['post']['make_image_default'] == 'on'){
             $inputs['meta_type'] = 1;
             $query2 = "UPDATE `profiles_meta` SET `meta_type` = '2' WHERE `userId`='" . $_SESSION['user'] . "' AND `meta_type`='1'";
-            $dbh->upsert($query2);
+            $this->dbh->upsert($query2);
             $query2 = "DELETE FROM  `profiles_meta` WHERE `userId`='" . $_SESSION['user'] . "' AND `value`=''";
-            $dbh->upsert($query2);
+            $this->dbh->upsert($query2);
           } else {
             $inputs['meta_type'] = 2;
           }
@@ -42,16 +42,13 @@ class profile_edit extends dbconnection{
             $inputs['meta_type'] = 2;
         }
         $upload_image_query = $this->upload_image_query($inputs);
-        $dbh->upsert($upload_image_query);
+        $this->dbh->upsert($upload_image_query);
       }
     }
   }
 
-  $profile_data = $dbh->query($this->get_profile_query());
-  $profile_images = $dbh->query($this->get_profile_images());
-  // select loggedin users detail
-  $res = $dbh->query("SELECT * FROM profiles WHERE userId=".$_SESSION['user']);
-  $userRow=$res[0];
+  $profile_data = $this->dbh->query($this->get_profile_query());
+  $profile_images = $this->dbh->query($this->get_profile_images());
 
   require_once(VIEW_DIR . '/head_logged_in.php');
   require_once(VIEW_DIR . '/profile_edit.php');

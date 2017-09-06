@@ -1,18 +1,18 @@
 <?php
 
-class conversations extends dbconnection
+class conversations
 {
   
   public function __construct(){
-    $dbh = new dbconnection;
+    $this->dbh = new dbconnection;
     
     // if session is not set this will redirect to login page
     if( !isset($_SESSION['user']) ) {
       header("Location: index.php");
       exit;
     }
-    $inputs = $dbh->validate_inputs($_SESSION, $_POST, $_GET);
-
+    $inputs = $this->dbh->validate_inputs($_SESSION, $_POST, $_GET);
+    $inputs['attachment'] = '';
    if(isset($_POST['send_message'])){
     $inputs['to_user']['userId'] = $inputs['post']['to'];
     $attachment_path = '';
@@ -22,14 +22,18 @@ class conversations extends dbconnection
       }
 
     $query = $this->create_message_query($inputs);
-    $dbh->upsert($query);
+    $this->dbh->upsert($query);
+    }
+
+    if(isset($_POST['message_index'])){
+      $this->set_message_rating($inputs);
     }
 
 
-    $res = $dbh->query("SELECT * FROM profiles WHERE userId=".$_SESSION['user']);
-    $userRow=$res[0];
-    $conversations_query = $this->get_conversations($inputs);
-    $conversations = $dbh->query($conversations_query);
+    // $res = $this->dbh->query("SELECT * FROM profiles WHERE userId=".$_SESSION['user']);
+    // $userRow=$res[0];
+    $conversations = $this->dbh->query($this->get_conversations($inputs));
+    $this->mark_message_read($conversations, $inputs);
     
     require_once(VIEW_DIR . 'head_logged_in.php');
     require_once(VIEW_DIR . 'conversations.php');
@@ -37,17 +41,40 @@ class conversations extends dbconnection
   }
 
   public function get_conversations($inputs){ 
-      $query = "SELECT subject, body, time_sent, userName, `read`, userId, attachment FROM messages LEFT JOIN `users` ON messages.from = users.userId WHERE (`to`=" . $inputs['session']['user'] . " AND `from`=" . $inputs['get']['from_user'] . ") OR (`to`=" . $inputs['get']['from_user'] . " AND `from`=" . $inputs['session']['user'] . ") ORDER BY time_sent ASC";
+      $query = "SELECT `index`, `from`, `subject`, `body`, `time_sent`, `userName`, `read`, `userId`, `attachment`, `rating` FROM messages LEFT JOIN `users` ON messages.from = users.userId WHERE (`to`=" . $inputs['session']['user'] . " AND `from`=" . $inputs['get']['from_user'] . ") OR (`to`=" . $inputs['get']['from_user'] . " AND `from`=" . $inputs['session']['user'] . ") ORDER BY time_sent ASC";
       return $query;
   }
 
   public function create_message_query($inputs){
-    $query = "INSERT INTO messages (`to`, `from`, `subject`, `body`, `read`, `attachment`, `time_sent`) VALUES ('" . $inputs['to_user']['userId'] . "', '" . $inputs['session']['user'] . "', '" . $inputs['post']['subject'] . "', '" . $inputs['post']['body'] . "', 0, '" . $inputs['attachment'] ."'," . time() . ")";
+    $query = "INSERT INTO messages (`to`, `from`, `subject`, `body`, `read`, `attachment`, `rating`, `time_sent`) VALUES ('" . $inputs['to_user']['userId'] . "', '" . $inputs['session']['user'] . "', '" . $inputs['post']['subject'] . "', '" . $inputs['post']['body'] . "', 0, '" . $inputs['attachment'] ."', 0, " . time() . ")";
     return $query;
+  }
+
+  public function mark_message_read($conversations, $inputs){
+    $unread_messages = '';
+    foreach ($conversations as $conversation) {
+      if($conversation['read'] == '0' && $conversation['from'] != $inputs['session']['user']){
+        $unread_messages .= $conversation['index'] . ', ';
+      }
+    }
+
+    if($unread_messages != ''){
+      $unread_messages = rtrim($unread_messages, ', ');
+      $query = "UPDATE `messages` SET `read`='1', `time_read`='".time()."' WHERE `index` IN (".$unread_messages.")";
+      $this->dbh->upsert($query);
+      $stopper = 0;
+    }
+
+    return 0;
   }
 
   public function get_user_by($user_id){
 
+  }
+
+  public function set_message_rating($inputs){
+    $query = "UPDATE `messages` set `rating`='".$inputs['post']['message_rating']."' WHERE `index`='". $inputs['post']['message_index'] ."'";
+    $this->dbh->upsert($query);
   }
 
   public function do_image_upload($inputs){

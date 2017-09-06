@@ -1,7 +1,7 @@
 <?php
 
 
-class signin extends dbconnection
+class signin
 {
   public function __construct(){
   $dbh = new dbconnection;

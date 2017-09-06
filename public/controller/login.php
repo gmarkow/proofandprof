@@ -1,6 +1,6 @@
 <?php
 
-class login extends dbconnection
+class login
 {
   
   public function __construct(){

@@ -1,5 +1,5 @@
     <p>New Message</p>
-    <form action="messages.php" method="POST"  enctype="multipart/form-data">
+    <form action="?route=messages" method="POST"  enctype="multipart/form-data">
       <input id='send_message' name='send_message' type='hidden' value='1'>
       
       <label for='to'>Who To?</label>

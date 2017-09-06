@@ -27,5 +27,4 @@ if( isset($_GET['route'])){
 } else {
   include('view/template/homepage.php');
 }
-$wtf = ob_get_contents();
 ob_end_flush(); 

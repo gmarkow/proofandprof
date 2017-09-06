@@ -1,6 +1,6 @@
 <?php
 
-class logout extends dbconnection
+class logout
 {
   
   public function __construct(){

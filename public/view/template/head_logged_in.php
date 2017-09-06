@@ -1,4 +1,8 @@
-<?php ?>
+<?php
+  $stopper = 0;
+  $res = $this->dbh->query("SELECT * FROM profiles WHERE userId=".$_SESSION['user']);
+  $userRow=$res[0];
+?>
 
 <!DOCTYPE html>
 <html> 
@@ -37,6 +41,7 @@
               <ul class="dropdown-menu">
                 <li><a href="?route=profile_edit"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Edit Profile</a></li>
                 <li><a href="?route=messages"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Messages</a></li>
+                <li><a href="?route=my_connections"><span class="glyphicon glyphicon-log-out"></span>&nbsp;My Connections</a></li>
                 <li><a href="?route=logout&logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
               </ul>
             </li>
