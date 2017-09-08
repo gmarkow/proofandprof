@@ -1,0 +1,57 @@
+/*https://coolors.co/8c313e-19323c-484a47-b84a62-5c6d70*/
+
+body, html {
+    height:  100%;
+    margin:  0px auto;
+    padding: 0px auto;
+}
+
+
+#main-wrapper{
+  background-color: rgba(25, 50, 60, 1);
+  height:100%;
+}
+
+.login-link{
+  margin-left:25%;
+  text-align: center;
+  color: #E0E2DB;
+}
+
+#blue-and-CFCFEA{
+  background-color: rgba(25,50,60,1);
+  color: #CFCFEA;
+}
+#blue-and-EDF0DA{
+  background-color: rgba(25,50,60,1);
+  color: #EDF0DA;
+}
+#blue-and-E0E2DB{
+  background-color: rgba(25,50,60,1);
+  color: #E0E2DB;
+}
+#light-and-CFCFEA{
+  background-color: rgba(184,74,98,1);
+  color: #CFCFEA;
+}
+#light-and-EDF0DA{
+  background-color: rgba(184,74,98,1);
+  color: #EDF0DA;
+}
+#light-and-E0E2DB{
+  background-color: rgba(184,74,98,1);
+  color: #E0E2DB;
+}
+
+#red-and-CFCFEA{
+  background-color: rgba(139,38,53,1);
+  color: #CFCFEA;
+}
+#red-and-EDF0DA{
+  background-color: rgba(139,38,53,1);
+  color: #EDF0DA;
+}
+#red-and-E0E2DB{
+  background-color: rgba(139,38,53,1);
+  color: #E0E2DB;
+}

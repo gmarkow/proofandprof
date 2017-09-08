@@ -19,7 +19,6 @@ if ( ! $session->isValid(5)) {
 //echo $session->get('hello.world'); // bonjour
 
 ob_start();
-// session_start();
 if( isset($_GET['route'])){
   $route = $_GET['route'];
   include('controller/' . $route . '.php');

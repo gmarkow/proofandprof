@@ -12,3 +12,4 @@
 
   define('VIEW_DIR', PUBLIC_DIR . 'view/template/');
   define('CONTROLLER_DIR', PUBLIC_DIR . 'controller/');
+  define('ASSETS_DIR', PUBLIC_DIR . 'assets/');

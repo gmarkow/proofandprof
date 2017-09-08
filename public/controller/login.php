@@ -6,7 +6,7 @@ class login
   public function __construct(){
 
   if( isset($_SESSION['user'])!="" ){
-    header("Location: ?route=home");
+    //header("Location: ?route=home");
   }
   $dbh = new dbconnection;
 
