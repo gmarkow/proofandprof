@@ -23,6 +23,10 @@ body, html {
 
 }
 
+.login-link:hover{
+  color:#b84a62 !important;
+}
+
 #signin-link{
   background-image: url(../../assets/images/signup.png);
 }
