@@ -13,9 +13,36 @@ body, html {
 }
 
 .login-link{
-  margin-left:25%;
-  text-align: center;
   color: #E0E2DB;
+  height:200px;
+  width:50%;
+  margin: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+}
+
+#signin-link{
+  background-image: url(../../assets/images/signup.png);
+}
+#login-link{
+  background-image: url(../../assets/images/login.png);
+}
+
+#signin-link:hover{
+  background-image: url(../../assets/images/signup-hover.png) !important;
+}
+
+#login-link:hover{
+  background-image: url(../../assets/images/login-hover.png) !important;
+}
+
+.login-text{
+  position: absolute;
+  bottom:-20px;
+  width:50%;
+  text-align: center;
 }
 
 #blue-and-CFCFEA{
