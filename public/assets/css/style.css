@@ -45,24 +45,39 @@ p {
   background-image: url(../../assets/images/login-hover.png) !important;
 }
 
-#gender-w{
+.gender-w {
   background-image: url(../../assets/images/gender-w.png);
 }
-#gender-d{
+.gender-w:hover {
+  background-image: url(../../assets/images/gender-w-hover.png) !important;
+}
+
+.pick-gender-w, .pick-gender-w:hover, .iam-gender-w, .iam-gender-w:hover{
+  background-image: url(../../assets/images/gender-w-picked.png) !important;
+}
+
+.gender-d{
   background-image: url(../../assets/images/gender-d.png);
 }
-#gender-m{
+
+.gender-d:hover{
+  background-image: url(../../assets/images/gender-d-hover.png) !important;
+}
+
+.pick-gender-d, .pick-gender-d:hover, .iam-gender-d, .iam-gender-d:hover{
+  background-image: url(../../assets/images/gender-d-picked.png) !important;
+}
+
+.gender-m{
   background-image: url(../../assets/images/gender-m.png);
 }
 
-#gender-w:hover{
-  background-image: url(../../assets/images/gender-w-hover.png) !important;
-}
-#gender-d:hover{
-  background-image: url(../../assets/images/gender-d-hover.png) !important;
-}
-#gender-m:hover{
+.gender-m:hover{
   background-image: url(../../assets/images/gender-m-hover.png) !important;
+}
+
+.pick-gender-m, .pick-gender-m:hover, .iam-gender-m, .iam-gender-m:hover{
+  background-image: url(../../assets/images/gender-m-picked.png) !important;
 }
 
 .login-text{

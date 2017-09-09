@@ -1,7 +1,6 @@
 <?php
 
 require_once(VIEW_DIR . 'head_logged_out.php');
-//echo "homepage";
 ?>
 
 

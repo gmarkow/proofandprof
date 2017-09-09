@@ -10,59 +10,65 @@ require_once(VIEW_DIR . 'head_logged_out.php');
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body> -->
-
+  <div id="login-form">
+    <form method="post" action="?route=login" autocomplete="off">
 <div id="login-1">
   <p style="color:#E0E2DB;">I am a</p>
-  <div class="col-lg-4">
-    <a href="?route=login">
-      <div id="gender-w" class="login-link">
+  <div class="col-lg-4" onclick="clickedIam('iam-gender-w')">
+    <!-- <a href="?route=login"> -->
+      <div id="iam-gender-w" class="login-link gender-w">
+        <!-- <input id="iam-gender-w-radio" type="hidden" name="gender" value="female"> -->
         <p class="login-text">Woman</p>
       </div>
-    </a>
+    <!-- </a> -->
   </div>
-  <div class="col-lg-4">
-    <a href="?route=login">
-      <div id="gender-d" class="login-link">
+  <div class="col-lg-4" onclick="clickedIam('iam-gender-d')">
+    <!-- <a href="?route=login"> -->
+      <div id="iam-gender-d" class="login-link gender-d">
+       <!-- <input id="iam-gender-d-radio" type="hidden" name="gender" value="other"> -->
         <p class="login-text">In Between</p>
       </div>
-    </a>
+    <!-- </a> -->
   </div> 
-  <div class="col-lg-4">
-    <a href="?route=login">
-      <div id="gender-m" class="login-link">
+  <div class="col-lg-4" onclick="clickedIam('iam-gender-m')">
+    <!-- <a href="?route=login"> -->
+      <div id="iam-gender-m" class="login-link gender-m">
         <p class="login-text">Man</p>
       </div>
-    </a>
+    <!-- </a> -->
   </div>
 </div>
+  <input id="iam-gender-input" type="hidden" name="gender" value="">
 
 <div id="login-2">
   <p style="color:#E0E2DB;">Looking for a</p>
-  <div id="pick-gender-w" class="col-lg-4" onclick="clicked('pick-gender-w')">
-    <a href="?route=login">
-      <div id="gender-w" class="login-link">
+  <div class="col-lg-4" onclick="clickedLooking('pick-gender-w')">
+    <!-- <a href="?route=login"> -->
+      <div id="pick-gender-w"  class="login-link gender-w">
+        <input id="pick-gender-w-checkbox" type="hidden" name="pick-gender-w" value="">
         <p class="login-text">Woman</p>
       </div>
-    </a>
+    <!-- </a> -->
   </div>
-  <div id="pick-gender-d" class="col-lg-4" onclick="clicked('pick-gender-d')">
-    <a href="?route=login">
-      <div id="gender-d" class="login-link">
+  <div class="col-lg-4" onclick="clickedLooking('pick-gender-d')">
+    <!-- <a href="?route=login"> -->
+      <div id="pick-gender-d" class="login-link gender-d">
+        <input id="pick-gender-d-checkbox" type="hidden" name="pick-gender-d" value="">
         <p class="login-text">In Between</p>
       </div>
-    </a>
+    <!-- </a> -->
   </div> 
-  <div id="pick-gender-m" class="col-lg-4" onclick="clicked('pick-gender-m')">
-    <a href="?route=login">
-      <div id="gender-m" class="login-link">
+  <div class="col-lg-4" onclick="clickedLooking('pick-gender-m')">
+    <!-- <a href="?route=login"> -->
+      <div id="pick-gender-m" class="login-link gender-m">
+        <input id="pick-gender-m-checkbox" type="hidden" name="pick-gender-m" value="">
         <p class="login-text">Man</p>
       </div>
-    </a>
+    <!-- </a> -->
   </div>
 </div>
 
-  <div id="login-form">
-    <form method="post" action="?route=login" autocomplete="off">
+
     
       <div class="col-md-12">
         
@@ -84,13 +90,20 @@ require_once(VIEW_DIR . 'head_logged_out.php');
                 </div>
               </div>
                 <?php
-      }
+        }
       ?>
-            
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
+                  <input type="text" name="zipcode" class="form-control" placeholder="Enter Zip" maxlength="50" value="<?php echo $name ?>" />
+                </div>
+                <span class="text-danger"><?php echo $nameError; ?></span>
+            </div>    
+
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-              <input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" value="<?php echo $name ?>" />
+              <input type="text" name="name" class="form-control" placeholder="User Name" maxlength="50" value="<?php echo $name ?>" />
                 </div>
                 <span class="text-danger"><?php echo $nameError; ?></span>
             </div>
@@ -133,8 +146,29 @@ require_once(VIEW_DIR . 'head_logged_out.php');
     </div>
 
 <script>
-  function clicked(id){
-    $("#" + id).style('background-image', 'url(' +  + ')')
+  function clickedLooking(id){
+    $("#" + id).toggleClass(id);
+    var checkboxStatus = $("#" + id + "-checkbox").attr('value');
+    if( checkboxStatus == "true" ){ 
+      $("#" + id + "-checkbox").attr('value', false);
+    }else{
+      $("#" + id + "-checkbox").attr('value', true);
+    } 
+  }
+
+  function clickedIam(id){
+    allIams = $(".iamSet");
+    var iamId;
+    for (var i = allIams.length - 1; i >= 0; i--) {
+      iamId = allIams[i].id;
+      $("#" + iamId).toggleClass('iamSet'); 
+      $("#" + iamId).toggleClass(iamId); 
+    }
+
+    var gender = id.slice(-1);
+    $("#" + id).toggleClass(id);
+    $("#" + id).toggleClass('iamSet'); 
+    $("#iam-gender-input").val(gender);
   }
 </script>
 

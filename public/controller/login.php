@@ -33,6 +33,15 @@ class login
     $pass = trim($_POST['pass']);
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
+
+    $gender = $_POST['gender'];
+    $looking_for = array(
+      'men'   => $_POST['pick-gender-m'],
+      'women' => $_POST['pick-gender-w'],
+      'other' => $_POST['pick-gender-d']
+      );
+    $zipcode = $_POST['zipcode'];
+    
     
     // basic name validation
     if (empty($name)) {
