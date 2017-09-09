@@ -6,6 +6,10 @@ body, html {
     padding: 0px auto;
 }
 
+p {
+  /*color: #E0E2DB;*/
+}
+
 
 #main-wrapper{
   background-color: rgba(25, 50, 60, 1);
@@ -20,11 +24,10 @@ body, html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-
 }
 
 .login-link:hover{
-  color:#b84a62 !important;
+  color: #b84a62 !important;
 }
 
 #signin-link{
@@ -40,6 +43,26 @@ body, html {
 
 #login-link:hover{
   background-image: url(../../assets/images/login-hover.png) !important;
+}
+
+#gender-w{
+  background-image: url(../../assets/images/gender-w.png);
+}
+#gender-d{
+  background-image: url(../../assets/images/gender-d.png);
+}
+#gender-m{
+  background-image: url(../../assets/images/gender-m.png);
+}
+
+#gender-w:hover{
+  background-image: url(../../assets/images/gender-w-hover.png) !important;
+}
+#gender-d:hover{
+  background-image: url(../../assets/images/gender-d-hover.png) !important;
+}
+#gender-m:hover{
+  background-image: url(../../assets/images/gender-m-hover.png) !important;
 }
 
 .login-text{
