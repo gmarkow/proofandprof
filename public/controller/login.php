@@ -35,11 +35,11 @@ class login
     $pass = htmlspecialchars($pass);
 
     $gender = $_POST['gender'];
-    $looking_for = array(
-      'men'   => $_POST['pick-gender-m'],
-      'women' => $_POST['pick-gender-w'],
-      'other' => $_POST['pick-gender-d']
-      );
+   
+    $looking_for = ($_POST['pick-gender-m'] == true ? 4 : 0);
+    $looking_for +=  ($_POST['pick-gender-w'] == true ? 2 : 0);
+    $looking_for +=  ($_POST['pick-gender-d'] == true ? 1 : 0);
+
     $zipcode = $_POST['zipcode'];
     
     
@@ -89,7 +89,7 @@ class login
       $query = "SELECT userId FROM users WHERE userEmail='$email' AND userName='$name'";
       $recordId = $dbh->query($query);
       $recordId = $recordId[0]['userId'];
-      $query = "INSERT INTO profiles(userId, userName, userEmail) VALUES('$recordId', '$name', '$email')";
+      $query = "INSERT INTO profiles(userId, userName, location_zip, userEmail, user_gender, looking_for) VALUES('$recordId', '$name', '$zipcode', '$email', '$gender', '$looking_for')";
       $dbh->upsert($query);
       $query = "INSERT INTO profiles_meta(userId, meta_type, value, timestamp) VALUES('$recordId', '1', '', " . time() . ")";
       $dbh->upsert($query);
