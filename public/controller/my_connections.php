@@ -67,12 +67,13 @@ class my_connections
       $stopper = 0;
     }
     
-
-    $connection_data = $this->dbh->query($query);
-    foreach ($connection_data as $connection_d) {
-      $this->connections[$connection_d['connection_id']]['met_in_person'] = $connection_d['met_in_person'];
-      $this->connections[$connection_d['connection_id']]['vouch_online'] = $connection_d['vouch_online'];
-      $this->connections[$connection_d['connection_id']]['vouch_afk'] = $connection_d['vouch_afk'];
+    if(sizeof($connection_ids) > 0){
+      $connection_data = $this->dbh->query($query);
+      foreach ($connection_data as $connection_d) {
+        $this->connections[$connection_d['connection_id']]['met_in_person'] = $connection_d['met_in_person'];
+        $this->connections[$connection_d['connection_id']]['vouch_online'] = $connection_d['vouch_online'];
+        $this->connections[$connection_d['connection_id']]['vouch_afk'] = $connection_d['vouch_afk'];
+      }
     }
     return 0;
 

@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Coding Cage - Login & Registration System</title>
-<link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css"  />
-<link rel="stylesheet" href="style.css" type="text/css" />
-</head>
-<body>
-
-<div class="container">
+<?php
+require_once(VIEW_DIR . 'head_logged_out.php');
+?>
 
   <div id="login-form">
     <form method="post" action="?route=signin" autocomplete="off">

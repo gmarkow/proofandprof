@@ -6,8 +6,8 @@ body, html {
     padding: 0px auto;
 }
 
-p {
-  /*color: #E0E2DB;*/
+p, h1, h2, h3, th, td, label{
+  color: #E1E4E5;
 }
 
 

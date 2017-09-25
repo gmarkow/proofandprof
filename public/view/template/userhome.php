@@ -1,3 +1,8 @@
+<?php
+require_once(VIEW_DIR . 'head_logged_in.php');
+?>
+
+
 <div class="page-header">
       <h3>Near You</h3>
       </div>
